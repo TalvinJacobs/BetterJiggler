@@ -20,11 +20,11 @@ def jiggle_mouse():
     while True:
         if mouse_moving:
             x, y = queryMousePosition()
-            moveMouse(x+1, y+1)
+            moveMouse(x+10, y+10)
             time.sleep(1)
             x, y = queryMousePosition()
-            moveMouse(x-1, y-1)
-            time.sleep(1)
+            moveMouse(x-10, y-10)
+            time.sleep(0.5)
 
 def toggle_mouse_moving():
     global mouse_moving
