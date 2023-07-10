@@ -1,9 +1,9 @@
+import sys
 import ctypes
 import time
 import threading
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout
+from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtGui import QColor, QPainter
-from PyQt5.QtCore import Qt
 
 LONG = ctypes.c_long
 DWORD = ctypes.c_ulong
@@ -31,15 +31,26 @@ def move_mouse(dx, dy):
 
 mouse_moving = False
 
-def jiggle_mouse(): 
-    while True: 
+def jiggle_mouse():
+    global stop_thread
+    while not stop_thread: 
         if mouse_moving: 
             move_mouse(10, 10) 
             time.sleep(1) 
             move_mouse(-10, -10) 
             time.sleep(0.5)
+        else:
+            time.sleep(1)
 
 class ColorWidget(QWidget):
+    def toggle_mouse_moving():
+        global mouse_moving
+        mouse_moving = not mouse_moving
+
+    def on_closing(self):
+        global stop_thread
+        stop_thread = True
+    
     def __init__(self, parent=None):
         super(ColorWidget, self).__init__(parent)
         self.setWindowTitle('BetterJiggler by TJ')
@@ -56,7 +67,7 @@ class ColorWidget(QWidget):
         self.update()
 
 if __name__ == '__main__':
-    import sys
+    stop_thread = False
     t = threading.Thread(target=jiggle_mouse)
     t.start()
 
