@@ -1,4 +1,4 @@
-# betterjiggler
+# BetterJiggler
 Tiny Mouse Jiggler w/ GUI in Python (Standard Library!)
 
 jiggler.pyw -> Python standard library
